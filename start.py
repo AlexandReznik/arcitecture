@@ -1,6 +1,6 @@
 from wsgiref.simple_server import make_server
 
-from .main import Application
+from .framework.main import Application
 from urls import routes, fronts
 
 
