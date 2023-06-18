@@ -2,7 +2,6 @@ from datetime import date
 from .view import Index, Page
 
 
-# front controller
 def secret_front(request):
     request['date'] = date.today()
 
