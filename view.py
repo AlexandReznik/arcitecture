@@ -10,19 +10,19 @@ class Page:
     def __call__(self, request):
         return '200 OK', render('page.html', date=request.get('date', None))
 
-class Contacts:
-    def __call__(self, request, environ, method):
-        if method == 'GET':
-            return '200 OK', render('contact.html', date=request.get('date', None))
-        elif method == 'POST':
-            params = PostRequest().get_request_params(environ)
-            with open('messages.txt', 'a') as file:
-                file.write(f'Message: {params}\n')
-                file.write('---------------------------\n')
-            return '200 OK', render('contact.html', date=request.get('date', None))
-        else:
-            return {
-                'status': '405 Method Not Allowed',
-                'headers': [('Content-type', 'text/html')],
-                'content': '405 Method Not Allowed'
-            }
+# class Contacts:
+#     def __call__(self, request, environ, method):
+#         if method == 'GET':
+#             return '200 OK', render('contact.html', date=request.get('date', None))
+#         elif method == 'POST':
+#             params = PostRequest().get_request_params(environ)
+#             with open('messages.txt', 'a') as file:
+#                 file.write(f'Message: {params}\n')
+#                 file.write('---------------------------\n')
+#             return '200 OK', render('contact.html', date=request.get('date', None))
+#         else:
+#             return {
+#                 'status': '405 Method Not Allowed',
+#                 'headers': [('Content-type', 'text/html')],
+#                 'content': '405 Method Not Allowed'
+#             }
