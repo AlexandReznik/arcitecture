@@ -8,7 +8,7 @@ class Index:
 
 class Page:
     def __call__(self, request):
-        return '200 OK', render('contact.html', date=request.get('date', None))
+        return '200 OK', render('page.html', date=request.get('date', None))
 
 class Contacts:
     def __call__(self, request, environ, method):
