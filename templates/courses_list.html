@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block style %}{% include "inc_style.html" %}{% endblock %}
+{% block menu %}{% include "inc_menu.html" %}{% endblock %}
+{% block sidebar%} {% include 'inc_sidebar.html' %} {% endblock%}
+{% block body %}
+    <div id="content">
+        <a href="/">Back to main page</a>
+
+        <h1>Courses</h1>
+        <br>
+
+        <div>
+            <a href="/create-course/?id={{id}}">Create new course</a>
+            <br>
+            <h1>Courses list for category "{{name}}"</h1>
+            {% for item in objects_list %}
+            <li>
+                {{item.name}} <span><a href="/copy-course/?name={{item.name}}">Copy</a></span>
+            </li>
+            {% endfor %}
+        </div>
+      </div>
+{% endblock %}
