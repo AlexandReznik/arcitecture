@@ -1,21 +1,27 @@
 from typing import Any
 from framework.templates_render import render
 from patterns.create_patterns import Engine, Logger
+from patterns.structure_patterns import AppRoute, Debug
 
 site = Engine()
 logger = Logger("main")
+routes = {}
 
+@AppRoute(routes=routes, url='/')
 class Index:
+    @Debug(name='Index')
     def __call__(self, request):
         return '200 Ok', render('index.html', objects_list=site.categories)
 
-
+@AppRoute(routes=routes, url='/page/')
 class Page:
+    @Debug(name='About')
     def __call__(self, request):
         return '200 Ok', render('page.html', date=request.get('date', None))
 
-
+@AppRoute(routes=routes, url='/courses-list/')
 class CoursesList:
+    @Debug(name='CoursesList')
     def __call__(self, request):
         logger.log('Courses list')
         try:
@@ -27,7 +33,7 @@ class CoursesList:
         except KeyError:
             return '200 Ok', 'No courses yet'
         
-        
+@AppRoute(routes=routes, url='/create-course/')  
 class CreateCourse:
     
     category_id = -1
@@ -57,8 +63,9 @@ class CreateCourse:
             except KeyError:
                 return '200 Ok', 'No categories have been added yet'
 
-
+@AppRoute(routes=routes, url='/create-category/')
 class CreateCategory:
+    @Debug(name='CreateCategory')
     def __call__(self, request):
 
         if request['method'] == 'POST':
@@ -79,14 +86,15 @@ class CreateCategory:
             return '200 Ok', render('create_categories.html',
                                     categories=categories)
 
-
+@AppRoute(routes=routes, url='/category-list/')
 class CategoryList:
+    @Debug(name='CategoryList')
     def __call__(self, request):
         logger.log('Category list')
         return '200 OK', render('category_list.html',
                                 objects_list=site.categories)
 
-
+@AppRoute(routes=routes, url='/copy-course/')
 class CopyCourse:
     def __call__(self, request):
         request_params = request['request_params']
