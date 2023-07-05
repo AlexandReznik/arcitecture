@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block style %} {% include "inc_style.html" %} {%endblock%}
+{% block menu %}   {% include 'inc_menu.html' %} {% endblock %}
+{% block sidebar%} {% include 'inc_sidebar.html' %} {% endblock%}
+{% block body %}   
+      <div id="content">
+        <div><a href="/student-list/">Student list</a></div>
+        <div>
+            <h1>Craete student</h1>
+            <form method="post">
+                <input type="text" name="name" placeholder="Name">
+                <button type="submit">Save</button>
+            </form>
+        </div>
+      </div>
+{% endblock %}

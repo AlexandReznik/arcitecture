@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block style %} {% include "inc_style.html" %} {%endblock%}
+{% block menu %}   {% include 'inc_menu.html' %} {% endblock %}
+{% block sidebar%} {% include 'inc_sidebar.html' %} {% endblock%}
+{% block body %}   
+      <div id="content">
+        <div><a href="/create-student/">Create student</a></div>
+        <div><a href="/add-student/">Add student to course</a></div>
+        <h1>Student list</h1>
+        <div>
+            {% for item in objects_list %}
+            <li>
+                {{item.name}}
+                {% for course in item.courses %}
+                    {{course.name}}
+                {% endfor %}
+            </li>
+            {% endfor %}
+        </div>
+      </div>
+{% endblock %}

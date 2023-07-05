@@ -1,9 +1,11 @@
 from copy import deepcopy
 from quopri import decodestring
+from .behavioral_pattrns import FileWriter, Subject
 
 
 class User:
-    pass
+    def __init__(self, name):
+        self.name = name
 
 
 class Teacher(User):
@@ -11,7 +13,9 @@ class Teacher(User):
 
 
 class Student(User):
-    pass
+    def __init__(self, name):
+        self.courses = []
+        super().__init__(name)
 
 
 class UserFactory:
@@ -30,12 +34,22 @@ class CoursePrototype:
         return deepcopy(self)
 
 
-class Course(CoursePrototype):
+class Course(CoursePrototype, Subject):
 
     def __init__(self, name, category):
         self.name = name
         self.category = category
         self.category.courses.append(self)
+        self.students = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.students[item]
+
+    def add_student(self, student: Student):
+        self.students.append(student)
+        student.courses.append(self)
+        self.notify()
 
 
 class OnlineCourse(Course):
@@ -140,3 +154,14 @@ class Logger(metaclass=SingletonByName):
     @staticmethod
     def log(text):
         print('Log:', text)
+
+
+class Logger(metaclass=SingletonByName):
+
+    def __init__(self, name, writer=FileWriter()):
+        self.name = name
+        self.writer = writer
+
+    def log(self, text):
+        text = f'log---> {text}'
+        self.writer.write(text)
