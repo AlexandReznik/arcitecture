@@ -1,12 +1,16 @@
 from framework.templates_render import render
-from patterns.create_patterns import Engine, Logger
+from patterns.create_patterns import Engine, Logger, MapperRegistry
 from patterns.structure_patterns import AppRoute, Debug
 from patterns.behavioral_pattrns import EmailNotifier, SmsNotifier, ListView, CreateView, BaseSerializer
-    
+from patterns.system_patterns import UnitOfWork
+
+  
 site = Engine()
 logger = Logger("main")
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 routes = {}
 
 # @AppRoute(routes=routes, url='/')
