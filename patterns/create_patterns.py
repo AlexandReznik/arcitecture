@@ -115,12 +115,15 @@ class Engine:
     @staticmethod
     def create_course(type_, name, category):
         return CourseFactory.create(type_, name, category)
-
+    # Возврат функцией переменных разных типов. Вместо возвратат None,
+    # пусть функция возвращает исключение
     def get_course(self, name):
         for item in self.courses:
             if item.name == name:
                 return item
-        return None
+        raise Exception(f'There is no course with id = {id}')
+        
+    
 
     @staticmethod
     def decode_value(val):
